@@ -32,7 +32,3 @@ linters:
       - no-unnecessary-blank-lines
       - range
       - trailing-comma
-
-  vet:
-    excluded_files:
-      - vendor/**
