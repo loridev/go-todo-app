@@ -1,0 +1,34 @@
+version: 3
+
+tasks:
+  lint:
+    description: Run linters
+    cmds:
+      - golangci-lint run
+
+  lint-fix:
+    description: Run linters and fix issues
+    cmds:
+      - golangci-lint run --fix
+
+  run:
+    description: Run application
+    cmds:
+      - go run main.go
+
+  build:
+    description: Build application
+    cmds:
+      - go build -o todo-app .
+
+  clean:
+    description: Clean build artifacts
+    cmds:
+      - go clean -r .
+
+  help:
+    description: Show help
+    cmds:
+      - task --help
+
+  default: run

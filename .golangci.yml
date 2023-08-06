@@ -1,0 +1,34 @@
+linters:
+  goimports:
+    excluded_files:
+      - vendor/**
+
+  enable:
+    - gosec
+    - gofmt
+    - goimports
+    - misspell
+    - stylecheck
+    - vet
+
+  gosec:
+    excluded_files:
+      - vendor/**
+
+  gofmt:
+    goimports: true
+
+  misspell:
+    locale: US
+
+  stylecheck:
+    rules:
+      - comment-format
+      - curly
+      - else-after-return
+      - gofmt
+      - indent
+      - no-blank-lines
+      - no-unnecessary-blank-lines
+      - range
+      - trailing-comma

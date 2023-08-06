@@ -4,14 +4,19 @@ import (
 	"fmt"
 	"loridev/go-todo-app/utils"
 	"os"
+
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	godotenv.Load()
+	envErr := godotenv.Load()
+
+	if envErr != nil {
+		panic(utils.DisplayError("Failed to retrieve the dotenv file variables", envErr))
+	}
 
 	port := os.Getenv("PORT")
 
@@ -23,9 +28,9 @@ func main() {
 
 	r := gin.Default()
 
-	dbUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
+	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
 
-	db, dbConnErr := gorm.Open(mysql.Open(dbUrl), &gorm.Config{})
+	db, dbConnErr := gorm.Open(mysql.Open(dbURL), &gorm.Config{})
 
 	if dbConnErr != nil {
 		panic(utils.DisplayError("Failed to connect to the DB", dbConnErr))
