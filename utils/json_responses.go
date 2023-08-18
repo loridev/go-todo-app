@@ -2,11 +2,11 @@ package utils
 
 import (
 	"fmt"
-
-	"github.com/gin-gonic/gin"
+	"loridev/go-todo-app/types"
+	"net/http"
 )
 
-func GetDBErrorJSON(operation DBOperation, entityName string) gin.H {
+func GetDBErrorJSON(operation DBOperation, entityName string) *types.RestError {
 	err := ValidateOperation(operation)
 
 	if err != nil {
@@ -15,5 +15,15 @@ func GetDBErrorJSON(operation DBOperation, entityName string) gin.H {
 
 	message := fmt.Sprintf("Error while performing the operation \"%s\" on %s", operation, entityName)
 
-	return gin.H{"Error": message}
+	return &types.RestError{
+		Error: message,
+		Status: http.StatusInternalServerError,
+	}
+}
+
+func BadRequestError(message string) *types.RestError {
+	return &types.RestError{
+		Error: message,
+		Status: http.StatusBadRequest,
+	}
 }
