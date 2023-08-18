@@ -30,7 +30,6 @@ func main() {
 
 	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
 
-	fmt.Println(dbURL)
 	db, dbConnErr := gorm.Open(postgres.Open(dbURL))
 
 	if dbConnErr != nil {
