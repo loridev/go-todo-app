@@ -7,7 +7,7 @@ import (
 )
 
 type Todo struct {
-  gorm.Model
+	gorm.Model
 	id        uint
 	Title     string
 	Done      bool
@@ -16,5 +16,5 @@ type Todo struct {
 }
 
 func (Todo) TableName() string {
-  return "todos"
+	return "todos"
 }

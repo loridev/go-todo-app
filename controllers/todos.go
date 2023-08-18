@@ -22,14 +22,18 @@ func GetTodos(c *gin.Context) {
 func CreateTodo(c *gin.Context) {
 	body := TodoRequestBody{}
 
-	c.BindJSON(&body)
+	err := c.BindJSON(&body)
+
+	if err != nil {
+		utils.DisplayError("Error binding body", err)
+	}
 
 	todo := &models.Todo{Title: body.Title}
 
 	dbResponse := config.DB.Create(&todo)
 
 	if dbResponse.Error != nil {
-		jsonResponse := utils.GetDbErrorJson("insert", "todo")
+		jsonResponse := utils.GetDBErrorJSON("insert", "todo")
 		c.JSON(http.StatusInternalServerError, jsonResponse)
 
 		return
