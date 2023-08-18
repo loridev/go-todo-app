@@ -11,7 +11,7 @@ tasks:
     cmds:
       - golangci-lint run --fix
 
-  run:
+  start:
     description: Run application
     cmds:
       - go run main.go
@@ -31,4 +31,6 @@ tasks:
     cmds:
       - task --help
 
-  default: run
+  default:
+    cmds:
+      - task: start
