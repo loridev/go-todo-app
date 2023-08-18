@@ -16,6 +16,11 @@ tasks:
     cmds:
       - go run main.go
 
+  migrate:
+    description: Migrate the database
+    cmds:
+      - go run migrate/migrate.go
+
   build:
     description: Build application
     cmds:
