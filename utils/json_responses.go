@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetDbErrorJson(operation DBOperation, entityName string) gin.H {
+func GetDBErrorJSON(operation DBOperation, entityName string) gin.H {
 	err := ValidateOperation(operation)
 
 	if err != nil {

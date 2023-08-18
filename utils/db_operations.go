@@ -9,9 +9,9 @@ import (
 type DBOperation string
 
 func ValidateOperation(o DBOperation) error {
-	supported_operations := []DBOperation{"show, insert, update, delete"}
+	supportedOperations := []DBOperation{"show, insert, update, delete"}
 
-	isValid := slices.Contains(supported_operations, o)
+	isValid := slices.Contains(supportedOperations, o)
 
 	if !isValid {
 		return errors.New("invalid database operation")
