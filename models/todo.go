@@ -1,11 +1,20 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Todo struct {
-	id        uint   `gorm:"primary_key"`
-	Title     string `gorm:"not null"`
-	Done      bool   `gorm:"default:false"`
+  gorm.Model
+	id        uint
+	Title     string
+	Done      bool
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (Todo) TableName() string {
+  return "todos"
 }
