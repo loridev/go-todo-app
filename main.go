@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -28,31 +28,35 @@ func main() {
 
 	r := gin.Default()
 
-	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
+	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
 
-	db, dbConnErr := gorm.Open(mysql.Open(dbURL), &gorm.Config{})
+	db, dbConnErr := gorm.Open(postgres.Open(dbURL))
 
 	if dbConnErr != nil {
+		closeDB(db)
+
 		panic(utils.DisplayError("Failed to connect to the DB", dbConnErr))
 	}
 
 	fmt.Println("Connection established with DB")
 
-	defer func() {
-		sqlDB, dbCloseErr := db.DB()
-
-		sqlDB.Close()
-
-		if dbCloseErr != nil {
-			panic(utils.DisplayError("Failed to close the database connection", dbCloseErr))
-		}
-
-		fmt.Println("Connection closed with DB")
-	}()
+	defer closeDB(db)
 
 	serverStartErr := r.Run(fmt.Sprintf(":%s", port))
 
 	if serverStartErr != nil {
 		panic(utils.DisplayError("Failed to start the server", serverStartErr))
 	}
+}
+
+func closeDB(db *gorm.DB) {
+	sqlDB, dbCloseErr := db.DB()
+
+	sqlDB.Close()
+
+	if dbCloseErr != nil {
+		panic(utils.DisplayError("Failed to close the database connection", dbCloseErr))
+	}
+
+	fmt.Println("Connection closed with DB")
 }
