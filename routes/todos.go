@@ -6,9 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TodosRouter(r *gin.Engine) {
-	routes := r.Group("/api/v1/todos")
+func TodosRouter(r *gin.RouterGroup) {
+	router := r.Group("/todos")
 
-	routes.GET("", controllers.GetTodos)
-	routes.POST("", controllers.CreateTodo)
+	router.GET("", controllers.GetTodos)
+	router.GET("/:id", controllers.GetTodoById)
+	router.POST("", controllers.CreateTodo)
+	router.PUT("/:id", controllers.UpdateTodo)
+	router.DELETE("/:id", controllers.DeleteTodo)
 }

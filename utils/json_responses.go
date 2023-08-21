@@ -7,7 +7,7 @@ import (
 )
 
 func GetDBErrorJSON(operation DBOperation, entityName string) *types.RestError {
-	err := ValidateOperation(operation)
+	err := operation.Validate()
 
 	if err != nil {
 		panic(err)
@@ -16,14 +16,14 @@ func GetDBErrorJSON(operation DBOperation, entityName string) *types.RestError {
 	message := fmt.Sprintf("Error while performing the operation \"%s\" on %s", operation, entityName)
 
 	return &types.RestError{
-		Error: message,
+		Error:  message,
 		Status: http.StatusInternalServerError,
 	}
 }
 
 func BadRequestError(message string) *types.RestError {
 	return &types.RestError{
-		Error: message,
+		Error:  message,
 		Status: http.StatusBadRequest,
 	}
 }

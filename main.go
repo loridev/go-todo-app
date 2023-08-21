@@ -17,7 +17,8 @@ func main() {
 
 	r := gin.Default()
 
-	routes.TodosRouter(r)
+	v1Router := routes.ApiV1Router(r)
+	routes.TodosRouter(v1Router)
 
 	config.RunServer(r)
 }
