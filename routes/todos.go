@@ -10,7 +10,7 @@ func TodosRouter(r *gin.RouterGroup) {
 	router := r.Group("/todos")
 
 	router.GET("", controllers.GetTodos)
-	router.GET("/:id", controllers.GetTodoById)
+	router.GET("/:id", controllers.GetTodoByID)
 	router.POST("", controllers.CreateTodo)
 	router.PUT("/:id", controllers.UpdateTodo)
 	router.DELETE("/:id", controllers.DeleteTodo)

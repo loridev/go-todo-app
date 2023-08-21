@@ -21,7 +21,7 @@ func GetTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, todos)
 }
 
-func GetTodoById(c *gin.Context) {
+func GetTodoByID(c *gin.Context) {
 	id := c.Param("id")
 
 	var todo models.Todo
