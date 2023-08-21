@@ -8,7 +8,7 @@ import (
 
 type DBOperation string
 
-func ValidateOperation(o DBOperation) error {
+func (o DBOperation) Validate() error {
 	supportedOperations := []DBOperation{"show, insert, update, delete"}
 
 	isValid := slices.Contains(supportedOperations, o)
