@@ -28,8 +28,6 @@ func ConnectToDB() {
 
 	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
 
-	fmt.Println(dbURL)
-
 	openFunc := GetDBConnOpener(dbSchema)
 
 	DB, dbConnErr = gorm.Open(openFunc(dbURL))
