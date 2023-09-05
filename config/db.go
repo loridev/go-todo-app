@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"loridev/go-todo-app/models"
 	"loridev/go-todo-app/utils"
 	"os"
 
@@ -39,8 +38,6 @@ func ConnectToDB() {
 
 		panic(utils.DisplayError("Failed to connect to the DB", dbConnErr))
 	}
-
-	DB.AutoMigrate(&models.Todo{})
 
 	fmt.Println("Connection established with DB")
 }
