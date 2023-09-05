@@ -13,6 +13,7 @@ type Todo struct {
 	Done      bool
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt
 }
 
 func (Todo) TableName() string {
