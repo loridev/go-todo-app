@@ -2,9 +2,7 @@ package main
 
 import (
 	"loridev/go-todo-app/config"
-	"loridev/go-todo-app/models"
 	"loridev/go-todo-app/routes"
-	"loridev/go-todo-app/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +10,6 @@ import (
 func init() {
 	config.LoadEnvVariables()
 	config.ConnectToDB()
-	err := config.DB.AutoMigrate(&models.Todo{})
-
-	if err != nil {
-		panic(utils.DisplayError("Error in migration", err))
-	}
 }
 
 func main() {

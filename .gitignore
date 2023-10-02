@@ -22,3 +22,7 @@ go.work
 
 #environment
 *.env*
+
+# Dev files
+_*
+.*
