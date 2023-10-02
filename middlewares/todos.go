@@ -9,9 +9,9 @@ import (
 )
 
 func IsTodoURLValid(c *gin.Context) {
-	url_params := types.TodoUrlParams{}
+	urlParams := types.TodoURLParams{}
 
-	utils.ValidateObjectAndAbortIfErrors(c, &url_params, constants.DataFormatURLParams)
+	utils.ValidateObjectAndAbortIfErrors(c, &urlParams, constants.DataFormatURLParams)
 }
 
 func CreateTodo(c *gin.Context) {
