@@ -1,6 +1,6 @@
 module loridev/go-todo-app
 
-go 1.18
+go 1.21
 
 require gorm.io/gorm v1.25.2
 

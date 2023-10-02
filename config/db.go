@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"loridev/go-todo-app/models"
 	"loridev/go-todo-app/utils"
 	"os"
 
@@ -32,6 +33,12 @@ func ConnectToDB() {
 	)
 
 	DB, dbConnErr = gorm.Open(postgres.Open(dbURL), &gorm.Config{})
+
+	migrationErr := DB.AutoMigrate(&models.Todo{})
+
+	if migrationErr != nil {
+		panic(utils.DisplayError("Error in migration", migrationErr))
+	}
 
 	if dbConnErr != nil {
 		CloseDB()

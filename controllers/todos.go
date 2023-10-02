@@ -3,15 +3,12 @@ package controllers
 import (
 	"loridev/go-todo-app/config"
 	"loridev/go-todo-app/models"
+	"loridev/go-todo-app/types"
 	"loridev/go-todo-app/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
-
-type TodoRequestBody struct {
-	Title string `json:"title"`
-}
 
 func GetTodos(c *gin.Context) {
 	var todos []models.Todo
@@ -22,30 +19,13 @@ func GetTodos(c *gin.Context) {
 }
 
 func GetTodoByID(c *gin.Context) {
-	id := c.Param("id")
-
-	var todo models.Todo
-
-	dbResponse := config.DB.First(&todo, id)
-
-	if dbResponse.Error != nil {
-		jsonResponse := utils.GetDBErrorJSON("show", "todo")
-		c.JSON(http.StatusInternalServerError, jsonResponse)
-
-		return
-	}
+	todo := c.MustGet("entity").(*models.Todo)
 
 	c.JSON(http.StatusOK, todo)
 }
 
 func CreateTodo(c *gin.Context) {
-	body := TodoRequestBody{}
-
-	err := c.BindJSON(&body)
-
-	if err != nil {
-		utils.DisplayError("Error binding body", err)
-	}
+	body := c.MustGet("valid_body").(*types.TodoCreateRequestBody)
 
 	todo := &models.Todo{Title: body.Title}
 
@@ -53,24 +33,19 @@ func CreateTodo(c *gin.Context) {
 
 	if dbResponse.Error != nil {
 		jsonResponse := utils.GetDBErrorJSON("insert", "todo")
-		c.JSON(http.StatusInternalServerError, jsonResponse)
 
-		return
+		c.AbortWithStatusJSON(http.StatusInternalServerError, jsonResponse)
 	}
 
 	c.JSON(http.StatusCreated, &todo)
 }
 
 func UpdateTodo(c *gin.Context) {
-	id := c.Param("id")
-	var todo models.Todo
-	config.DB.First(&todo, id)
+	todo := c.MustGet("entity").(*models.Todo)
 
-	body := TodoRequestBody{}
-	c.BindJSON(&body)
-	data := &models.Todo{Title: body.Title}
+	body := c.MustGet("valid_body").(*types.TodoUpdateRequestBody)
 
-	dbResponse := config.DB.Model(&todo).Updates(data)
+	dbResponse := config.DB.Model(&todo).Updates(body)
 
 	if dbResponse.Error != nil {
 		jsonResponse := utils.GetDBErrorJSON("update", "todo")
@@ -83,9 +58,7 @@ func UpdateTodo(c *gin.Context) {
 }
 
 func DeleteTodo(c *gin.Context) {
-	id := c.Param("id")
-	var todo models.Todo
-	config.DB.First(&todo, id)
+	todo := c.MustGet("entity").(*models.Todo)
 
 	dbResponse := config.DB.Delete(&todo)
 
