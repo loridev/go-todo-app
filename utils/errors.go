@@ -58,7 +58,7 @@ func validateURL(c *gin.Context, object any) {
 	if err := c.ShouldBindUri(&urlParams); err != nil {
 		formattedErrors := FormatValidationErrors(err.(validator.ValidationErrors))
 
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"errors": formattedErrors})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"errors": formattedErrors})
 	}
 }
 
